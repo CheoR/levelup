@@ -5,4 +5,4 @@ class GameType(models.Model):
     """
         GameType model.
     """
-    type = models.CharField(max_length=50)
+    label = models.CharField(max_length=50)

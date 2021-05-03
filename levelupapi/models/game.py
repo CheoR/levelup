@@ -11,4 +11,4 @@ class Game(models.Model):
     difficulty = models.IntegerField()
     players = models.IntegerField()
 
-    game_type_id = models.ForeignKey(GameType, on_delete=models.CASCADE)
+    game_type = models.ForeignKey(GameType, on_delete=models.CASCADE)
