@@ -82,7 +82,7 @@ __pycache__
 ####################
 *.rst
 *.jpg
-*.png*
+# *.png*
 *.gif
 *.xap
 # *.jpeg
