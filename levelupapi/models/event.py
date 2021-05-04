@@ -12,7 +12,8 @@ class Event(models.Model):
         "Game" - alternative way to refer to model without having to import it.
     """
 
-    event_date = models.DateField()
+    # Changing DateField to DateTimeField allows you to add hour time in fixtures.
+    event_date = models.DateTimeField()
     description = models.CharField(max_length=100)
     organizer = models.ForeignKey(Gamer, on_delete=models.CASCADE)
     game = models.ForeignKey("Game", on_delete=models.CASCADE)

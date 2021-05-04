@@ -3,7 +3,7 @@
   "model": "levelupapi.event",
   "pk": 1,
   "fields" : {
-   "event_date": "2021-04-05",
+   "event_date": "2021-04-05T12:00:00+03:00",
    "description": "Chess game.",
    "organizer": 1,
    "game": 1
@@ -13,7 +13,7 @@
   "model": "levelupapi.event",
   "pk": 2,
   "fields" : {
-   "event_date": "2021-05-04",
+   "event_date": "2021-05-04T16:30:30+03:00",
    "description": "Dress up D&D game.",
    "organizer": 1,
    "game": 2
