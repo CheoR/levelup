@@ -1,0 +1,10 @@
+[
+    {
+        "model": "levelupapi.gamer",
+        "pk": 1,
+        "fields": {
+            "user": 1,
+            "bio": "Pk fields in user fixture corresponds to user fields in tokens/games fixture."
+        }
+    }
+]
