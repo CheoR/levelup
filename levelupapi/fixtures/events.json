@@ -1,0 +1,22 @@
+[
+ {
+  "model": "levelupapi.event",
+  "pk": 1,
+  "fields" : {
+   "event_date": "2021-04-05",
+   "description": "Chess game.",
+   "organizer": 1,
+   "game": 1
+  }
+ },
+ {
+  "model": "levelupapi.event",
+  "pk": 2,
+  "fields" : {
+   "event_date": "2021-05-04",
+   "description": "Dress up D&D game.",
+   "organizer": 1,
+   "game": 2
+  }
+ }
+]
