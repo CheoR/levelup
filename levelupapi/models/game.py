@@ -1,6 +1,6 @@
 from django.db import models
 
-from .game_type import GameType
+from .gametype import GameType
 
 
 class Game(models.Model):
