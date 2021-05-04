@@ -1,6 +1,6 @@
 from django.db import models
 
-from .game_type import GameType
+from .gametype import GameType
 
 
 class Game(models.Model):
@@ -11,4 +11,5 @@ class Game(models.Model):
     difficulty = models.IntegerField()
     players = models.IntegerField()
 
+    gamer = models.ForeignKey("Gamer", on_delete=models.CASCADE, default=None)
     game_type = models.ForeignKey(GameType, on_delete=models.CASCADE)

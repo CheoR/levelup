@@ -1,3 +1,12 @@
 {
- "python.pythonPath": "/home/cheo/.virtualenvs/levelup-tjXVZVQz/bin/python"
+ "python.pythonPath": "/home/cheo/.virtualenvs/levelup-tjXVZVQz/bin/python",
+ "sqltools.connections": [
+  {
+   "previewLimit": 50,
+   "driver": "SQLite",
+   "name": "LevelUp",
+   "database": "db.sqlite3"
+  }
+ ],
+ "sqltools.useNodeRuntime": true
 }
