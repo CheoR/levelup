@@ -1,0 +1,3 @@
+-- CONFIRM FIXTURE INSERTED 3 OBJECTS INTO gametype TABLE
+SELECT *
+FROM levelupapi_gametype;

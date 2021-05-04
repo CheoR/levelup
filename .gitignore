@@ -38,7 +38,7 @@ lib64
 # Logs and databases #
 ######################
 *.log
-*.sql
+# *.sql
 *.sqlite*
 pip-log.txt
 
@@ -340,7 +340,7 @@ lib64
 # Logs and databases #
 ######################
 *.log
-*.sql
+# *.sql
 *.sqlite*
 pip-log.txt
 
