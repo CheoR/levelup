@@ -13,9 +13,26 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.contrib import admin
+# from django.contrib import admin
+from django.conf.urls import include
 from django.urls import path
 
+from levelupapi.views import login_user, register_user
+
+# At any point, your urlpatterns can “include” other URLconf modules.
+#  This essentially “roots” a set of URLs below other ones.
+# Whenever Django encounters include(), it chops off whatever part
+#  of the URL matched up to that point and sends the remaining
+#  string to the included URLconf for further processing.
+
+# URL namespaces allow you to uniquely reverse named URL patterns
+#  even if different applications use the same URL names.
+#  It’s a good practice for third-party apps to always use
+#  namespaced URLs.
+# namespace can have the same name as the app but doesn't have to be.
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('register', register_user),
+    path('login', login_user),
+    path('api-auth', include('rest_framework.urls', namespace='rest_framework')),
+    # path('admin/', admin.site.urls),
 ]
