@@ -16,8 +16,9 @@ Including another URLconf
 # from django.contrib import admin
 from django.conf.urls import include
 from django.urls import path
+from rest_framework import routers
 
-from levelupapi.views import login_user, register_user
+from levelupapi.views import login_user, register_user, GameTypeViewSet
 
 # At any point, your urlpatterns can “include” other URLconf modules.
 #  This essentially “roots” a set of URLs below other ones.
@@ -30,7 +31,13 @@ from levelupapi.views import login_user, register_user
 #  It’s a good practice for third-party apps to always use
 #  namespaced URLs.
 # namespace can have the same name as the app but doesn't have to be.
+
+# may no longer need trailing_slash
+router = routers.DefaultRouter(trailing_slash=False)
+router.register(r'gametypes', GameTypeViewSet, 'gametype')
+
 urlpatterns = [
+    path('', include(router.urls)),
     path('register', register_user),
     path('login', login_user),
     path('api-auth', include('rest_framework.urls', namespace='rest_framework')),
