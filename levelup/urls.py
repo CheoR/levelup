@@ -18,7 +18,7 @@ from django.conf.urls import include
 from django.urls import path
 from rest_framework import routers
 
-from levelupapi.views import login_user, register_user, GameTypeViewSet, GameViewSet
+from levelupapi.views import login_user, register_user, GameTypeViewSet, GameViewSet, EventViewSet
 
 # At any point, your urlpatterns can “include” other URLconf modules.
 #  This essentially “roots” a set of URLs below other ones.
@@ -36,6 +36,7 @@ from levelupapi.views import login_user, register_user, GameTypeViewSet, GameVie
 router = routers.DefaultRouter(trailing_slash=False)
 router.register(r'gametypes', GameTypeViewSet, 'gametype')
 router.register(r'games', GameViewSet, 'game')
+router.register(r'events', EventViewSet, 'event')
 
 
 urlpatterns = [
