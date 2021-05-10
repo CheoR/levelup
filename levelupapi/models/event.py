@@ -13,7 +13,8 @@ class Event(models.Model):
     """
 
     # Changing DateField to DateTimeField allows you to add hour time in fixtures.
-    event_date = models.DateTimeField()
+    date = models.DateTimeField()
+    time = models.TimeField(auto_now=True)
     description = models.CharField(max_length=100)
     organizer = models.ForeignKey(Gamer, on_delete=models.CASCADE)
     game = models.ForeignKey("Game", on_delete=models.CASCADE)
