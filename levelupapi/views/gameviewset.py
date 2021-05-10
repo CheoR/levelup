@@ -32,21 +32,21 @@ class GameViewSet(ViewSet):
 
         # Use Token passed in the 'Authorization' header
         # Where user is a property on Gamer class.
-        gamer = Gamer.objects(user=request.auth.user)
+        gamer = Gamer.objects.get(user=request.auth.user)
+
+        # Use Django's ORM to fetch record that matches passed-in
+        # gameTypeId in the request from the db.
+        gametype = GameType.objects.get(pk=request.data['gameTypeId'])
 
         # Create a new Python instance of the Game class.
         # Use data from the request argument to fill in the
         # properties of the Game instance.
         game = Game()
         game.title = request.data['title']
-        game.make = request.data['maker']
-        game.number_of_players = request.data['number_of_players']
+        game.maker = request.data['maker']
+        game.number_of_players = request.data['numberOfPlayers']
         game.skill_level = request.data['skillLevel']
         game.gamer = gamer
-
-        # Use Django's ORM to fetch record that matches passed-in
-        # gameTypeId in the request from the db.
-        gametype = GameType.objects.get(pk=request.data['gameTypeId'])
         game.gametype = gametype
 
         # Try to save the new game instance to db.
@@ -54,7 +54,7 @@ class GameViewSet(ViewSet):
         # and return to client in a Response objct
         try:
             game.save()
-            serialized_game = GameTypeSerializer(
+            serialized_game = GameSerializer(
                 game, context={'request': request})
 
             return Response(serialized_game.data)

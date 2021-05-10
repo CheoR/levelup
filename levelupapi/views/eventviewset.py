@@ -86,6 +86,7 @@ class EventViewSet(ViewSet):
         events = Event.objects.all()
 
         # Support filtering events by game
+        # Can take out self, just a differnt way of looking at request.
         game = self.request.query_params.get('gameId', None)
 
         if game is not None:

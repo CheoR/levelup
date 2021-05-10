@@ -14,6 +14,9 @@ class EventSerializer(serializers.ModelSerializer):
 
     # If the field is used to represent a to-many relationship,
     #  you should add the many=True flag to the serializer field.
+    # Embedded serializer is good so you only get fields you want
+    # instead of getting all fields when using
+    # depth = 1
     game = GameSerializer(many=False)
 
     class Meta:

@@ -16,4 +16,6 @@ class GameSerializer(serializers.ModelSerializer):
         fields = ('id', 'title', 'maker', 'number_of_players',
                   'skill_level', 'gametype')
         # depth - Django's version of expand.
-        depth = 1
+        # Use embedded serializers to get what you want from gametype instead
+        # of getting all the info for embedded object
+        # depth = 1
