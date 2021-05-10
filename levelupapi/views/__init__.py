@@ -1,12 +1,15 @@
 """Views Module"""
-from .auth import login_user
 from .auth import register_user
+from .auth import login_user
 
-from .gameviewset import GameViewSet
 from .gameserializer import GameSerializer
+from .gameviewset import GameViewSet
 
-from .gametypeviewset import GameTypeViewSet
 from .gametypeserializer import GameTypeSerializer
+from .gametypeviewset import GameTypeViewSet
 
-from .eventviewset import EventViewSet
 from .eventserializer import EventSerializer
+from .eventviewset import EventViewSet
+
+from .eventgamerserializer import EventGamerSerializer
+from .eventuserserializer import EventUserSerializer
