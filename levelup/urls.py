@@ -18,7 +18,7 @@ from django.conf.urls import include
 from django.urls import path
 from rest_framework import routers
 
-from levelupapi.views import login_user, register_user, GameTypeViewSet
+from levelupapi.views import login_user, register_user, GameTypeViewSet, GameViewSet
 
 # At any point, your urlpatterns can “include” other URLconf modules.
 #  This essentially “roots” a set of URLs below other ones.
@@ -35,6 +35,8 @@ from levelupapi.views import login_user, register_user, GameTypeViewSet
 # may no longer need trailing_slash
 router = routers.DefaultRouter(trailing_slash=False)
 router.register(r'gametypes', GameTypeViewSet, 'gametype')
+router.register(r'games', GameViewSet, 'game')
+
 
 urlpatterns = [
     path('', include(router.urls)),
