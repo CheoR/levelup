@@ -9,7 +9,7 @@ from rest_framework import status
 
 from levelupapi.views.eventserializer import EventSerializer
 from levelupapi.views.gameserializer import GameSerializer
-from levelupapi.models import Game, Event, Gamer
+from levelupapi.models import Game, Event, Gamer, EventAttendee
 
 
 class EventViewSet(ViewSet):
@@ -97,3 +97,67 @@ class EventViewSet(ViewSet):
         serialized_event = EventSerializer(
             events, many=True, context={'request': request})
         return Response(serialized_event.data)
+
+    @action(methods=['post', 'delete'], detail=True)
+    def signup(self, request, pk=None):
+        """
+            Manage users signup to event.
+        """
+
+        # Confirm which user is making the request to sign up
+        # with Djagno's 'Authoriizatin' header
+        gamer = Gamer.objects.get(user=request.auth.user)
+
+        # when event does not exist
+        try:
+            event = Event.objects.get(pk=pk)
+        except Event.DoesNotExist:
+            return Response(
+                {'message': 'Event does not exist.'},
+                satus=status.HTTP_400_BAD_REQUEST
+            )
+
+        # sign up action
+        if request.method == "POST":
+            # pk is event id user wants to sign up for
+            event = Event.objects.get(pk=pk)
+
+            try:
+                # is user already signed up
+                isRegistered = EventAttendee.objects.get(
+                    event=event,
+                    gamer=gamer)
+                return Response(
+                    {'message': 'Gamer already signed up.'},
+                    status=status.HTTP_422_UNPROCESSABLE_ENTITY
+                )
+            except EventAttendee.DoesNotExist:
+                isRegistered = EventAttendee()
+                isRegistered.event = event
+                isRegistered.gamer = gamer
+                isRegistered.save()
+
+                return Response({}, status=status.HTTP_201_CREATED)
+        # Leave previously joined event
+        elif request.method == "DELETE":
+            # when an event does not exist
+            # get authenticated user
+            gamer = Gamer.objects.get(user=request.auth.user)
+
+            try:
+                # try delete from signup
+                isRegistered = EventAttendee.objects.get(
+                    event=event,
+                    gamer=gamer
+                )
+                isRegistered.delete()
+
+                return Response(None, status=status.HTTP_204_NO_CONTENT)
+
+            except EventAttendee.DoesNotExist:
+                return Response(
+                    {'message': 'Not registered for event.'},
+                    status=status.HTTP_404_NOT_FOUND
+                )
+        # Advise client any method other than POST, DELETE not supported
+        return Response({}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
