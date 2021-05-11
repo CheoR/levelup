@@ -27,6 +27,6 @@ class Event(models.Model):
         #  intermediate table that you want to use.
         # The most common use for this option is when you want to
         #  associate extra data with a many-to-many relationship.
-        through="EventGamer",
+        through="EventAttendee",
         # The name to use for the relation from the related object back to this one.
         related_name="attending")
