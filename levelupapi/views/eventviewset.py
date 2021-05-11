@@ -8,7 +8,6 @@ from rest_framework.viewsets import ViewSet
 from rest_framework import status
 
 from levelupapi.views.eventserializer import EventSerializer
-from levelupapi.views.gameserializer import GameSerializer
 from levelupapi.models import Game, Event, Gamer, EventAttendee
 
 
@@ -83,7 +82,15 @@ class EventViewSet(ViewSet):
             Returns:
                 Response -- JSON serialized list of events
         """
+        # Current authenticated user
+        gamer = Gamer.objects.get(user=request.auth.user)
         events = Event.objects.all()
+
+        # set 'joined' property on every event
+        for event in events:
+            # check to see if the gamer is in the attendees
+            # list on the event
+            event.joined = gamer in event.attendees.all()
 
         # Support filtering events by game
         # Can take out self, just a differnt way of looking at request.

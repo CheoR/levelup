@@ -30,3 +30,15 @@ class Event(models.Model):
         through="EventAttendee",
         # The name to use for the relation from the related object back to this one.
         related_name="attending")
+
+    @property
+    def joined(self):
+        """
+            Model property is not in the db, but calculated by the view logic
+            and put in the JSON response on the fly.
+        """
+        return self.__joined
+
+    @joined.setter
+    def joined(self, value):
+        self.__joined = value
