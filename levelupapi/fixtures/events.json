@@ -1,13 +1,23 @@
 [
     {
         "model": "levelupapi.event",
+        "pk": 4,
+        "fields":
+        {
+            "game": 1,
+            "organizer": 1,
+            "description": "BYOB",
+            "start_date": "2021-08-28T14:51:39.989Z"
+        }
+    },
+    {
+        "model": "levelupapi.event",
         "pk": 1,
         "fields": {
             "organizer": 1,
             "description": "Welcome To at lunch",
             "game": 1,
-            "date": "2021-10-04",
-            "time": "12:00"
+            "start_date": "2021-08-28T10:00:00.989Z"
         }
     },
     {
@@ -17,8 +27,8 @@
             "organizer": 1,
             "description": "Friday night Settlers and drinks",
             "game": 2,
-            "date": "2021-08-14",
-            "time": "19:30"
+            "start_date": "2021-08-28T10:00:00.989Z"
+
         }
     },
     {
@@ -28,8 +38,8 @@
             "organizer": 1,
             "description": "Vale of the Frost King campaign. All weekend.",
             "game": 3,
-            "date": "2021-04-20",
-            "time": "8:00"
+            "start_date": "2021-08-28T10:00:00.989Z"
+
         }
     }
 ]

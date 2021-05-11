@@ -13,8 +13,20 @@ class Event(models.Model):
     """
 
     # Changing DateField to DateTimeField allows you to add hour time in fixtures.
-    date = models.DateTimeField()
-    time = models.TimeField(auto_now=True)
-    description = models.CharField(max_length=100)
-    organizer = models.ForeignKey(Gamer, on_delete=models.CASCADE)
     game = models.ForeignKey("Game", on_delete=models.CASCADE)
+    organizer = models.ForeignKey("Gamer", on_delete=models.CASCADE)
+    start_date = models.DateTimeField()
+    description = models.TextField()
+
+    attendees = models.ManyToManyField(
+        "Gamer",
+        # Django will automatically generate a table to manage
+        #  many-to-many relationships. However, if you want to manually
+        #  specify the intermediary table, you can use the through
+        #  option to specify the Django model that represents the
+        #  intermediate table that you want to use.
+        # The most common use for this option is when you want to
+        #  associate extra data with a many-to-many relationship.
+        through="EventAttendee",
+        # The name to use for the relation from the related object back to this one.
+        related_name="attending")
