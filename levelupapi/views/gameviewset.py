@@ -91,7 +91,7 @@ class GameViewSet(ViewSet):
                 Response -- Empty body with 204 status code.
         """
 
-        gamer = Gamer.objects.get(user=request.user.auth)
+        gamer = Gamer.objects.get(user=request.auth.user)
 
         # Simlar to POST.
         # Instead of creating new instance, update exisiting record.
