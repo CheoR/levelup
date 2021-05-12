@@ -13,3 +13,5 @@ from .eventviewset import EventViewSet
 
 from .eventgamerserializer import EventGamerSerializer
 from .eventuserserializer import EventUserSerializer
+
+from .profileviewset import ProfileViewSet
