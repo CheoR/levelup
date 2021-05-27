@@ -303,3 +303,6 @@ venv.bak/
 
 # VS Code
 .vscode/
+
+# Since evyerobdy would have a different path
+connection.py
