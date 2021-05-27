@@ -1,5 +1,4 @@
 """GameTests"""
-from levelupapi.models.game import Game
 from rest_framework.test import APITestCase
 from rest_framework import status
 
@@ -14,7 +13,7 @@ class GameTests(APITestCase):
             Create  a new account and create sample category.
         """
 
-        url = "/regster"
+        url = "/register"
         data = {
             "username": "tacoman",
             "password": "burrito",
@@ -39,7 +38,7 @@ class GameTests(APITestCase):
         self.token = json_response["token"]
 
         # Assert user created
-        self.AssertEqual(response.status_code, status=status.HTTP_201_CREATED)
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
         # Seed DB with one instance of a GameType
         # This is needed since API  does not expose /gametypes
@@ -76,7 +75,8 @@ class GameTests(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
         # Assert that the properties on the created resource are correct
-        self.assertEqual(json_response["title"], "Clue")
-        self.assertEqual(json_response["maker"], "Milton Bradley")
-        self.assertEqual(json_response["skill_level"], 5)
-        self.assertEqual(json_response["number_of_players"], 6)
+        self.assertEqual(json_response['title'], data['title'])
+        self.assertEqual(json_response['maker'], data['maker'])
+        self.assertEqual(json_response['skill_level'], data['skillLevel'])
+        self.assertEqual(
+            json_response['number_of_players'], data['numberOfPlayers'])
