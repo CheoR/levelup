@@ -119,7 +119,7 @@ class GameTests(APITestCase):
 
     def test_change_game(self):
         """
-        Ensure we can change an existing game.
+            Ensure we can change an existing game.
         """
         game = Game()
         game.gametype_id = 1
@@ -131,7 +131,7 @@ class GameTests(APITestCase):
         game.save()
 
         # DEFINE NEW PROPERTIES FOR GAME
-        data = {
+        updated_data = {
             "gameTypeId": 1,
             "skillLevel": 2,
             "title": "Sorry",
@@ -140,7 +140,8 @@ class GameTests(APITestCase):
         }
 
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + self.token)
-        response = self.client.put(f"/games/{game.id}", data, format="json")
+        response = self.client.put(
+            f"/games/{game.id}", updated_data, format="json")
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
 
         # GET GAME AGAIN TO VERIFY CHANGES
@@ -153,3 +154,24 @@ class GameTests(APITestCase):
         self.assertEqual(json_response["maker"], "Hasbro")
         self.assertEqual(json_response["skill_level"], 2)
         self.assertEqual(json_response["number_of_players"], 4)
+
+    def test_delete_game(self):
+        """
+        Ensure we can delete an existing game.
+        """
+        game = Game()
+        game.gametype_id = 1
+        game.skill_level = 5
+        game.title = "Sorry"
+        game.maker = "Milton Bradley"
+        game.number_of_players = 4
+        game.gamer_id = 1
+        game.save()
+
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + self.token)
+        response = self.client.delete(f"/games/{game.id}")
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+
+        # GET GAME AGAIN TO VERIFY 404 response
+        response = self.client.get(f"/games/{game.id}")
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)

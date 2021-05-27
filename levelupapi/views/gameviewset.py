@@ -80,6 +80,10 @@ class GameViewSet(ViewSet):
                 context={'request': request})
 
             return Response(serialized_game.data)
+
+        except Game.DoesNotExist as ex:
+            return Response({'message': ex.args[0]}, status=status.HTTP_404_NOT_FOUND)
+
         except Exception as ex:
             return HttpResponseServerError(ex)
 
