@@ -31,7 +31,7 @@ def usergame_list(request):
                 JOIN
                     levelupapi_gamer r ON g.gamer_id = r.id
                 JOIN
-                    auth_user u ON gr.user_id = u.id
+                    auth_user u ON r.user_id = u.id
             """)
 
             dataset = db_cursor.fetchall()
@@ -83,10 +83,10 @@ def usergame_list(request):
                     games_by_user[uid]["full_name"] = row["full_name"]
                     games_by_user[uid]["games"] = [game]
 
-                print("Compare dataset vs gmes_by_user")
-                print(dataset)
-                print("*" * 10)
-                print(games_by_user)
+            # print("\nCompare dataset vs gmes_by_user")
+            # print(dataset)
+            # print("*" * 10)
+            # print(games_by_user)
 
         # Get only the values from the dictionary and create a list from them
         list_of_users_with_games = games_by_user.values()
