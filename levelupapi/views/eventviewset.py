@@ -31,6 +31,7 @@ class EventViewSet(ViewSet):
         event.description = request.data['description']
         event.time = request.data['time']
         event.date = request.data['date']
+        event.start_date = request.data['start_date']
         event.organizer = gamer
         event.game = game
 
@@ -38,7 +39,7 @@ class EventViewSet(ViewSet):
             event.save()
             serialized_event = EventSerializer(
                 event, context={'request': request})
-            return Response(serialized_event.data)
+            return Response(serialized_event.data, status=status.HTTP_201_CREATED)
         except ValidationError as ex:
             return Response({"reason": ex.message}, status=status.HTTP_400_BAD_REQUEST)
 
@@ -52,7 +53,7 @@ class EventViewSet(ViewSet):
             serialized_event = EventSerializer(
                 event, context={'request': request})
             return Response(serialized_event.data)
-        except Exception:
+        except Exception as ex:
             return HttpResponseServerError(ex)
 
     def destroy(self, request, pk=None):
@@ -65,7 +66,7 @@ class EventViewSet(ViewSet):
 
         try:
             event = Event.objects.get(pk=pk)
-            event.date()
+            event.delete()
 
             return Response({}, status=status.HTTP_204_NO_CONTENT)
 
@@ -104,6 +105,26 @@ class EventViewSet(ViewSet):
         serialized_event = EventSerializer(
             events, many=True, context={'request': request})
         return Response(serialized_event.data)
+
+    def update(self, request, pk=None):
+        """Handle PUT requests for an event
+
+        Returns:
+            Response -- Empty body with 204 status code
+        """
+        organizer = Gamer.objects.get(user=request.auth.user)
+
+        event = Event.objects.get(pk=pk)
+        event.description = request.data["description"]
+        event.date = request.data["date"]
+        event.time = request.data["time"]
+        event.organizer = organizer
+
+        game = Game.objects.get(pk=request.data["gameId"])
+        event.game = game
+        event.save()
+
+        return Response({}, status=status.HTTP_204_NO_CONTENT)
 
     @action(methods=['post', 'delete'], detail=True)
     def signup(self, request, pk=None):
