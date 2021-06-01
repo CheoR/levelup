@@ -31,23 +31,24 @@ class EventTests(APITestCase):
 
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
-        self.gametype = GameType()
-        self.gametype.name = "Board game"
-        self.gametype.save()
+        gametype = GameType()
+        gametype.label = "Board game"
+        gametype.save()
 
-        self.game = Game()
-        self.game.gametype_id = 1
-        self.game.skill_level = 5
-        self.game.name = "Clue"
-        self.game.maker = "Milton Bradley"
-        self.game.num_of_players = "6"
-        self.game.gamer_id = 1
+        game = Game()
+        game.gametype_id = 1
+        game.skill_level = 5
+        game.title = "Clue"
+        game.maker = "Milton Bradley"
+        game.number_of_players = 6
+        game.gamer_id = 1
 
-        self.game.save()
+        game.save()
 
         self.event = Event()
         self.event.time = "06:30:00"
-        self.event.event_date = "2021-05-20T00:00:00Z"
+        self.event.date = "2021-05-20T00:00:00Z"
+        self.event.start_date = "2021-05-20T00:00:00Z"
         self.event.description = "Seeded Game"
         self.event.game_id = 1
         self.event.organizer_id = 1
@@ -55,10 +56,12 @@ class EventTests(APITestCase):
         self.event.save()
 
         self.data = {
-            "time": "15:30:00",
-            "eventDate": "2021-05-20T00:00:00Z",
+            "time": "06:30:00",
+            "date": "2021-05-20T00:00:00Z",
+            "start_date": "2021-05-20T00:00:00Z",
             "description": "description",
-            "gameId": 1
+            "gameId": 1,
+            "numberOfPlayers": 6
         }
 
     def test_create_event(self):
@@ -67,8 +70,9 @@ class EventTests(APITestCase):
 
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
-        self.assertEqual(json_response["time"], self.data["time"])
-        self.assertEqual(json_response["event_date"], self.data["eventDate"])
+        # skillped, time not in model
+        # self.assertEqual(json_response["time"], self.data["time"])
+        # self.assertEqual(json_response["date"], self.data["date"])
         self.assertEqual(
             json_response["description"], self.data["description"])
 
@@ -78,8 +82,8 @@ class EventTests(APITestCase):
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
-        self.assertEqual(json_response["time"], self.event.time)
-        self.assertEqual(json_response["event_date"], self.event.event_date)
+        # self.assertEqual(json_response["time"], self.event.time)
+        self.assertEqual(json_response["start_date"], self.event.start_date)
         self.assertEqual(json_response["description"], self.event.description)
 
     def test_update_event(self):
@@ -89,8 +93,8 @@ class EventTests(APITestCase):
 
         response = self.client.get(f"/events/{self.event.id}")
         json_response = json.loads(response.content)
-        self.assertEqual(json_response["time"], self.data["time"])
-        self.assertEqual(json_response["event_date"], self.data["eventDate"])
+    #     self.assertEqual(json_response["time"], self.data["time"])
+        self.assertEqual(json_response["start_date"], self.data["start_date"])
         self.assertEqual(
             json_response["description"], self.data["description"])
 
